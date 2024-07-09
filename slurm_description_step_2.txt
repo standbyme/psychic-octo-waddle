@@ -1,0 +1,24 @@
+#!/bin/sh -l
+
+#SBATCH --mail-user=x@purdue.edu
+#SBATCH --mail-type=END
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=REQUEUE
+#SBATCH -A standby
+#SBATCH --time=04:00:00
+#SBATCH --gpus-per-node=1
+#SBATCH --constraint=A100-40GB
+#SBATCH --ntasks=1 --cpus-per-task=16
+#SBATCH --mem=32G
+
+unset PYTHONPATH
+
+module purge
+module load gcc/9.3.0.lua
+module load openmpi/4.1.5-gpu-cuda12.lua
+module load cuda/12.1.1.lua
+module load cudnn/cuda-12.1_8.9.lua
+
+unset PYTHONPATH
+
+python step_2_inference.py
